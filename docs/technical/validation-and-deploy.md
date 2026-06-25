@@ -1,0 +1,59 @@
+# 验证和静态部署
+
+本项目分为 Android 客户端验证和静态站部署两部分。展示站不运行完整 Java 后端。
+
+## Android 客户端验证
+
+验证分为三层：
+
+- 编译验证：本地运行 `:app:compileDebugJavaWithJavac`，不频繁生成 APK。
+- 页面验收：启动、首页、动态、短视频、社区、我的、日程、赛事、球场、球币等页面打开。
+- 写入验收：文字动态、图片动态、评论、创建活动、报名、打卡等真实写入路径。
+
+功能状态用四类标记：
+
+- 已验证。
+- 需回归。
+- 兜底可用。
+- 待接入。
+
+## APK 归档
+
+阶段 APK 命名遵循：
+
+```text
+xunqiu64-stageN-feature-name-YYYYMMDD-HHMM.apk
+```
+
+每个阶段包保留历史记录和 SHA-256，避免覆盖旧包。展示站中的 `downloads/latest-xunqiu64.apk` 是当前用于展示的最新阶段包副本。
+
+## Cloudflare Pages 部署
+
+Cloudflare Pages 参数：
+
+- Framework preset：`None`
+- Build command：留空
+- Build output directory：`/`
+- Root directory：仓库根目录
+
+部署内容：
+
+- `index.html`
+- `docs.html`
+- `docs/technical/`
+- `assets/`
+- `downloads/latest-xunqiu64.apk`
+
+## 后端边界
+
+完整寻球后端是 Java Maven WAR，需要：
+
+- JDK。
+- Tomcat。
+- MySQL。
+- Redis。
+- 配置文件。
+- 媒体上传目录。
+
+Cloudflare Pages 不能运行这类后端服务。本展示站仅用于技术材料和 APK 静态托管。
+
