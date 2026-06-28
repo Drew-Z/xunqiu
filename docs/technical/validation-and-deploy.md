@@ -1,6 +1,6 @@
 # 验证和静态部署
 
-本项目分为 Android 客户端验证和静态站部署两部分。展示站不运行完整 Java 后端。
+本项目分为 Android 客户端验证、新后端验证和静态站部署三部分。展示站不运行后端服务，后端由独立 Render 服务承载。
 
 ## Android 客户端验证
 
@@ -44,9 +44,19 @@ Cloudflare Pages 参数：
 - `assets/`
 - `downloads/latest-xunqiu64.apk`
 
+## 新后端验证
+
+新后端独立维护和部署，验证重点包括：
+
+- Render Web Service 健康检查。
+- PostgreSQL schema 与 seed 数据由 Flyway 初始化。
+- 登录、动态、球队、球场、视频等核心接口返回兼容旧客户端的 envelope。
+- 图片和视频上传通过服务端进入 Cloudflare R2。
+- 支付、短信、IM、推送等第三方能力只保留安全 stub，不在展示环境触发真实外部服务。
+
 ## 后端边界
 
-完整寻球后端是 Java Maven WAR，需要：
+旧版寻球后端是 Java Maven WAR，需要：
 
 - JDK。
 - Tomcat。
@@ -55,5 +65,4 @@ Cloudflare Pages 参数：
 - 配置文件。
 - 媒体上传目录。
 
-Cloudflare Pages 不能运行这类后端服务。本展示站仅用于技术材料和 APK 静态托管。
-
+Cloudflare Pages 不能运行这类后端服务。本展示站仅用于技术材料和 APK 静态托管；新版动态能力由独立后端服务提供，不在静态站中保存任何密钥或私有配置。

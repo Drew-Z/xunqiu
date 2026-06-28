@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>寻球 Android 64 位重建项目</title>
-  <meta name="description" content="寻球 Android 项目展示站：遗留 App 梳理、64 位客户端重建、旧接口复用、短视频上传播放链路和测试矩阵。">
+  <title>寻球移动端与现代后端重建项目</title>
+  <meta name="description" content="寻球项目展示站：遗留 App 梳理、Android 64 位客户端重建、Spring Boot 3 新后端、Render PostgreSQL、Cloudflare R2 上传链路和验证矩阵。">
   <style>
     :root {
       color-scheme: light;
-      --bg: #f6f7fb;
-      --paper: #ffffff;
-      --paper-soft: #f1f5f9;
-      --ink: #121826;
-      --muted: #607086;
-      --dim: #8793a6;
-      --line: #dce3ec;
-      --line-soft: #edf1f6;
-      --blue: #2563eb;
-      --blue-soft: #eaf1ff;
-      --green: #10a36d;
-      --green-soft: #e8f8f1;
-      --orange: #e07922;
-      --orange-soft: #fff3e8;
+      --bg: #f4f3ed;
+      --paper: rgba(255, 255, 255, .78);
+      --paper-soft: rgba(241, 245, 249, .72);
+      --ink: #172018;
+      --muted: #617062;
+      --dim: #899183;
+      --line: rgba(55, 74, 58, .16);
+      --line-soft: rgba(55, 74, 58, .1);
+      --blue: #2d5f81;
+      --blue-soft: rgba(45, 95, 129, .12);
+      --green: #4f8a46;
+      --green-soft: rgba(79, 138, 70, .13);
+      --orange: #b66f2e;
+      --orange-soft: rgba(182, 111, 46, .13);
       --red: #d94848;
       --shadow: 0 22px 60px rgba(34, 48, 76, .12);
       --shadow-soft: 0 12px 36px rgba(34, 48, 76, .08);
@@ -38,7 +38,10 @@
       margin: 0;
       min-height: 100vh;
       font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 42%, #eef3f8 100%);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(79, 138, 70, .16), transparent 34%),
+        radial-gradient(circle at 90% 16%, rgba(182, 111, 46, .15), transparent 32%),
+        linear-gradient(180deg, #fbfaf5 0%, var(--bg) 48%, #e9eee7 100%);
       color: var(--ink);
     }
 
@@ -115,6 +118,8 @@
       font-size: clamp(42px, 6vw, 74px);
       line-height: 1.02;
       letter-spacing: 0;
+      font-family: Georgia, "Times New Roman", "Songti SC", serif;
+      font-weight: 760;
     }
 
     .lead {
@@ -283,6 +288,8 @@
       font-size: clamp(30px, 4vw, 48px);
       line-height: 1.08;
       letter-spacing: 0;
+      font-family: Georgia, "Times New Roman", "Songti SC", serif;
+      font-weight: 740;
     }
 
     .section-head p {
@@ -311,6 +318,7 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px) saturate(1.04);
     }
 
     .stat {
@@ -579,12 +587,13 @@
   <header class="shell nav">
     <a class="brand" href="#">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span>寻球技术展示</span>
+      <span>寻球产品展示</span>
     </a>
     <nav class="nav-links" aria-label="页面导航">
       <a href="#legacy">旧版梳理</a>
-      <a href="#rebuild">64 位重建</a>
-      <a href="#video">视频链路</a>
+      <a href="#rebuild">新旧分流</a>
+      <a href="#backend">后端重建</a>
+      <a href="#video">上传链路</a>
       <a href="#docs">技术文档</a>
       <a href="#download">APK</a>
     </nav>
@@ -593,14 +602,15 @@
   <main>
     <section class="shell hero">
       <div>
-        <h1>把一个旧 Android 足球社区 App，重建成可验证的 64 位客户端。</h1>
+        <h1>把一个旧足球社区 App，重建成可演示的移动端与后端链路。</h1>
         <p class="lead">
-          这个展示站记录寻球项目的技术整理过程：从旧版多模块 App、32 位 native、Volley 网络和视频链路债务出发，
-          到轻量 64 位客户端、旧接口复用、短视频上传播放修复、测试矩阵和阶段包交付。
+          寻球围绕足球社群、球队管理、约赛日程、动态内容和短视频发布展开。当前链路保留旧版 App 与旧后端的对应关系，
+          同时让 64 位新版客户端接入 Spring Boot 3 新后端、托管 PostgreSQL 和 Cloudflare R2 上传存储。
         </p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="#rebuild">看技术复盘</a>
+          <a class="btn btn-primary" href="#rebuild">查看系统链路</a>
           <a class="btn btn-ghost" href="docs.html">查看技术文档</a>
+          <a class="btn btn-ghost" href="https://github.com/Drew-Z/xunqiu-backend-modern" target="_blank" rel="noopener noreferrer">新后端仓库</a>
           <a class="btn btn-ghost" href="downloads/latest-xunqiu64.apk">下载 APK</a>
         </div>
       </div>
@@ -609,8 +619,8 @@
         <img src="assets/football-hero.jpg" alt="夜场足球训练场景">
         <div class="visual-shade"></div>
         <div class="visual-copy">
-          <strong>Legacy to Android 64-bit</strong>
-          <span>旧工程不直接硬升级，先抽出核心闭环，再把风险拆成可测试的阶段。</span>
+          <strong>Legacy App to Modern Service</strong>
+          <span>旧客户端、64 位新客户端和现代后端分流运行，核心体验可以独立验收。</span>
         </div>
         <div class="phone" aria-hidden="true">
           <div class="screen">
@@ -621,18 +631,18 @@
             </div>
             <div class="feed">
               <div class="feed-card">
-                <div class="tiny-title">短视频上传保护</div>
-                <div class="tiny-copy">大小、时长、封面和 multipart 进度校验</div>
+              <div class="tiny-title">R2 上传链路</div>
+              <div class="tiny-copy">图片、视频和封面走服务端 multipart 入库</div>
                 <div class="bar"><span style="width: 82%"></span></div>
               </div>
               <div class="feed-card">
-                <div class="tiny-title">旧接口兼容</div>
-                <div class="tiny-copy">集中 ApiClient + 字段 fallback + URL 归一化</div>
+              <div class="tiny-title">兼容旧 envelope</div>
+              <div class="tiny-copy">保留 status、msg、data、datas、total 返回形态</div>
                 <div class="bar"><span style="width: 74%"></span></div>
               </div>
               <div class="feed-card">
-                <div class="tiny-title">沉浸播放流</div>
-                <div class="tiny-copy">横竖屏比例、评论抽屉、局部点赞刷新</div>
+              <div class="tiny-title">Render 后端</div>
+              <div class="tiny-copy">Docker 部署、健康检查、Flyway 初始化数据</div>
                 <div class="bar"><span style="width: 68%"></span></div>
               </div>
             </div>
@@ -644,24 +654,24 @@
     <section class="shell section">
       <div class="summary-grid">
         <div class="stat">
-          <div class="label">旧版工程</div>
-          <div class="value">多模块</div>
-          <p>主 App 加视频、IM、推送、UI 组件和工具库，业务域跨度大。</p>
+          <div class="label">旧版链路</div>
+          <div class="value">保留</div>
+          <p>旧版客户端继续对应旧后端，避免影响历史包和旧接口调用。</p>
         </div>
         <div class="stat">
-          <div class="label">关键约束</div>
-          <div class="value">32 位</div>
-          <p>旧工程过滤 armeabi / armeabi-v7a，是 64 位重建的核心触发点。</p>
+          <div class="label">新版客户端</div>
+          <div class="value">64 位</div>
+          <p>新 Android 客户端以配置化 Host 接入现代后端，保留核心业务体验。</p>
         </div>
         <div class="stat">
-          <div class="label">新版策略</div>
-          <div class="value">轻量重建</div>
-          <p>不搬全量旧代码，先复用旧服务端接口打通核心闭环。</p>
+          <div class="label">新后端</div>
+          <div class="value">Spring</div>
+          <p>Spring Boot 3 + Java 17 + PostgreSQL + Flyway，重建核心接口。</p>
         </div>
         <div class="stat">
-          <div class="label">交付方式</div>
-          <div class="value">矩阵验收</div>
-          <p>按已验证、需回归、兜底可用、待接入标记能力边界。</p>
+          <div class="label">对象存储</div>
+          <div class="value">R2</div>
+          <p>图片、视频、封面文件进入 Cloudflare R2，服务端只保存对象记录。</p>
         </div>
       </div>
     </section>
@@ -692,46 +702,70 @@
 
     <section class="shell section" id="rebuild">
       <div class="section-head">
-        <h2>64 位重建：先打核心闭环，再逐步恢复复杂能力。</h2>
-        <p>新版 `xunqiu-android64/` 是单模块轻量客户端，重点不是炫技重构，而是控制依赖面、复用旧接口、建立可验收路径。</p>
+        <h2>新旧分流：旧版对旧服务，新版对新服务。</h2>
+        <p>新版 `xunqiu-android64/` 是单模块轻量客户端，重点不是搬运旧工程，而是用现代后端恢复登录、动态、视频、球队、约赛和球场等核心路径。</p>
       </div>
       <div class="timeline">
         <div class="step">
           <time>Stage 1</time>
           <div>
             <strong>登录和会话</strong>
-            <p>复用旧服务端账号接口，拿到 userId/token，并用本地登录态承接后续接口调用。</p>
+            <p>新后端兼容旧客户端登录返回格式，继续使用 userId/token 承接后续接口调用。</p>
           </div>
         </div>
         <div class="step">
           <time>Stage 2</time>
           <div>
             <strong>动态和社区</strong>
-            <p>接入动态列表、精选动态、详情、点赞、评论、文字和图片动态发布，形成内容闭环。</p>
+            <p>接入动态列表、详情、点赞、评论、文字和图片动态发布，上传文件进入 R2。</p>
           </div>
         </div>
         <div class="step">
           <time>Stage 3</time>
           <div>
             <strong>日程和球队</strong>
-            <p>补齐创建活动、报名/请假、球队主页、成员、邀请码、临时队员和队费入口。</p>
+            <p>重建球队、成员、约赛日程、报名状态和球场列表，让客户端核心页面不空白。</p>
           </div>
         </div>
         <div class="step">
           <time>Stage 4</time>
           <div>
             <strong>短视频和验证</strong>
-            <p>完成短视频上传、播放、评论、点赞、横竖屏适配，并用测试矩阵记录阶段边界。</p>
+            <p>短视频接口支持上传、封面、播放记录、评论和点赞；第三方能力先以安全 stub 收口。</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="shell section" id="backend">
+      <div class="section-head">
+        <h2>现代后端：重建核心接口，而不是修补不可用旧服务。</h2>
+        <p>原数据库、上传目录和第三方能力已经不可依赖，因此新后端从数据模型、接口兼容和部署方式重新建立最小可用闭环。</p>
+      </div>
+      <div class="card-grid">
+        <article class="card">
+          <h3>兼容客户端接口</h3>
+          <p>服务挂载在统一路径下，登录保持旧格式返回，列表接口继续提供 status、msg、data、datas、total 等字段。</p>
+          <div class="tag-row"><span class="tag">Envelope</span><span class="tag green">Token</span><span class="tag orange">ApiClient</span></div>
+        </article>
+        <article class="card">
+          <h3>托管数据和迁移</h3>
+          <p>PostgreSQL 由 Render 托管，Flyway 自动创建核心表和演示数据，便于部署后快速验收。</p>
+          <div class="tag-row"><span class="tag">PostgreSQL</span><span class="tag green">Flyway</span><span class="tag orange">Seed</span></div>
+        </article>
+        <article class="card">
+          <h3>文件存储外置</h3>
+          <p>上传通过服务端接收 multipart，再写入 Cloudflare R2；数据库记录 key、公开 URL、大小和 MIME。</p>
+          <div class="tag-row"><span class="tag">R2</span><span class="tag green">S3 API</span><span class="tag orange">Multipart</span></div>
+        </article>
       </div>
     </section>
 
     <section class="shell section" id="video">
       <div class="case">
         <div class="case-panel">
-          <h2>短视频上传成功，却播放失败。</h2>
-          <p>这个问题最终不是 UI，也不是 HTTP 访问，而是服务端保存了空壳 MP4。HTTP 200 和 MIME 正常，并不代表视频文件有效。</p>
+          <h2>上传链路从本地文件，走到对象存储。</h2>
+          <p>视频问题不能只看 UI。新版链路会检查客户端文件、multipart 字段、服务端保存记录、R2 对象和回流 URL，避免“上传成功但播放失败”。</p>
           <div class="media-strip">
             <img src="assets/video-cover-street.jpg" alt="足球短视频封面">
             <img src="assets/video-cover-passing.jpg" alt="球队训练短视频封面">
@@ -746,7 +780,7 @@
             </div>
             <div class="case-item">
               <strong>上传和服务端</strong>
-              <span>确认 multipart 字段、服务端保存路径、静态访问状态码、MIME 和文件大小。</span>
+              <span>确认 multipart 字段、服务端记录、对象存储 key、公开 URL、MIME 和文件大小。</span>
             </div>
             <div class="case-item">
               <strong>客户端兜底</strong>
@@ -763,8 +797,8 @@
 
     <section class="shell section" id="docs">
       <div class="section-head">
-        <h2>技术文档：把迁移过程、关键设计和验证证据沉淀下来。</h2>
-        <p>文档聚焦工程事实：旧版技术债、64 位重建策略、视频链路修复、测试矩阵和 Cloudflare Pages 静态部署。</p>
+        <h2>技术文档：把迁移过程、后端重建和验证证据沉淀下来。</h2>
+        <p>文档聚焦工程事实：旧版技术债、64 位重建策略、视频链路、现代后端、R2 上传和 Cloudflare Pages 静态部署。</p>
       </div>
       <div class="doc-grid">
         <a class="doc-card" href="docs/technical/legacy-app.md">
@@ -772,16 +806,16 @@
           <p>多模块结构、构建栈、业务模块、网络层、视频链路和三方能力。</p>
         </a>
         <a class="doc-card" href="docs/technical/android64-rebuild.md">
-          <h3>64 位重建策略</h3>
-          <p>轻量客户端、旧接口复用、业务闭环优先、阶段包和能力边界。</p>
+          <h3>64 位与新后端策略</h3>
+          <p>轻量客户端、接口兼容、业务闭环优先、Render 部署和能力边界。</p>
         </a>
         <a class="doc-card" href="docs/technical/video-pipeline.md">
-          <h3>短视频链路修复</h3>
-          <p>multipart 上传、32 KB 异常文件拦截、封面处理和横竖屏播放。</p>
+          <h3>上传与短视频链路</h3>
+          <p>multipart 上传、R2 存储、32 KB 异常文件拦截、封面处理和横竖屏播放。</p>
         </a>
         <a class="doc-card" href="docs/technical/validation-and-deploy.md">
-          <h3>验证与静态部署</h3>
-          <p>编译检查、手动验收、写入验收、APK 下载和 Cloudflare Pages 参数。</p>
+          <h3>验证与部署</h3>
+          <p>客户端验收、后端健康检查、R2 上传验证、APK 下载和 Cloudflare Pages 参数。</p>
         </a>
       </div>
       <div class="cta-row">
@@ -793,24 +827,25 @@
       <div class="download">
         <div>
           <h2>可下载的 64 位阶段包</h2>
-          <p class="lead">这个 APK 用于展示客户端阶段成果，不包含完整后端演示。真实服务端仍是旧 Java WAR + MySQL/Redis 架构，本展示站只托管静态材料和阶段包。</p>
+          <p class="lead">这个 APK 用于展示客户端阶段成果。静态站不运行后端服务；新版客户端对应的新后端已独立部署，旧版客户端仍保留旧后端链路。</p>
           <div class="cta-row">
             <a class="btn btn-primary" href="downloads/latest-xunqiu64.apk">下载 latest-xunqiu64.apk</a>
             <a class="btn btn-ghost" href="docs.html">看部署说明</a>
+            <a class="btn btn-ghost" href="https://github.com/Drew-Z/xunqiu-backend-modern" target="_blank" rel="noopener noreferrer">后端仓库</a>
           </div>
         </div>
         <div class="facts">
           <div class="fact"><span>包名</span><strong>com.playlab.xunqiu64</strong></div>
           <div class="fact"><span>构建方向</span><strong>Android 64 位兼容客户端</strong></div>
-          <div class="fact"><span>最新包</span><strong>xunqiu64-stage6-video-immersive</strong></div>
-          <div class="fact"><span>部署方式</span><strong>Cloudflare Pages 静态托管</strong></div>
+          <div class="fact"><span>新后端</span><strong>Spring Boot 3 / PostgreSQL / R2</strong></div>
+          <div class="fact"><span>部署方式</span><strong>产品页 Cloudflare Pages，后端 Render</strong></div>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="shell">
-    <div>寻球项目静态展示站。页面只包含项目说明、技术文档和 APK 下载，不包含完整后端服务。</div>
+    <div>寻球项目静态展示站。页面只包含项目说明、技术文档、仓库入口和 APK 下载，不包含密钥、数据库连接或私有云配置。</div>
   </footer>
 </body>
 </html>

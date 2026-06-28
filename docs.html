@@ -148,16 +148,16 @@
 
   <main class="shell">
     <section class="hero">
-      <h1>技术文档和 Cloudflare Pages 部署说明</h1>
+      <h1>技术文档、产品页和部署边界</h1>
       <p class="lead">
-        这里保留项目技术说明，覆盖旧版 App 架构、64 位客户端重建、短视频链路和验证部署。Cloudflare Pages 部署无需构建命令，直接托管仓库根目录即可。
+        这里保留项目技术说明，覆盖旧版 App 架构、64 位客户端重建、现代后端、R2 上传链路和验证部署。Cloudflare Pages 只托管静态产品页，后端由独立 Render 服务承载。
       </p>
     </section>
 
     <section class="grid" aria-label="技术文档">
       <a class="card" href="docs/technical/overview.md">
         <h2>00 技术总览</h2>
-        <p>项目形态、部署边界、展示站内容和关键技术主题。</p>
+        <p>项目形态、新旧链路、部署边界、展示站内容和关键技术主题。</p>
         <span class="tag">Overview</span>
       </a>
       <a class="card" href="docs/technical/legacy-app.md">
@@ -167,17 +167,17 @@
       </a>
       <a class="card" href="docs/technical/android64-rebuild.md">
         <h2>02 64 位重建策略</h2>
-        <p>轻量客户端、旧接口复用、业务闭环优先、阶段推进和能力边界。</p>
+        <p>轻量客户端、接口兼容、新后端接入、业务闭环优先和能力边界。</p>
         <span class="tag">Case Study</span>
       </a>
       <a class="card" href="docs/technical/video-pipeline.md">
         <h2>03 短视频链路</h2>
-        <p>上传、封面、异常文件拦截、播放比例、评论抽屉和局部刷新。</p>
+        <p>上传、R2 存储、封面、异常文件拦截、播放比例和评论互动。</p>
         <span class="tag">Video Pipeline</span>
       </a>
       <a class="card" href="docs/technical/validation-and-deploy.md">
         <h2>04 验证与部署</h2>
-        <p>编译检查、功能验收、APK 归档、Cloudflare Pages 静态部署参数。</p>
+        <p>客户端验收、后端健康检查、R2 上传验证、APK 归档和静态部署参数。</p>
         <span class="tag">Deploy</span>
       </a>
     </section>
@@ -193,9 +193,10 @@
       </ul>
       <a class="btn" href="downloads/latest-xunqiu64.apk">下载 APK</a>
       <a class="btn secondary" href="README.md">查看 README</a>
+      <a class="btn secondary" href="https://github.com/Drew-Z/xunqiu-backend-modern" target="_blank" rel="noopener noreferrer">新后端仓库</a>
     </section>
   </main>
 
-  <footer class="shell">静态站只展示项目材料，不包含完整 Java 后端。</footer>
+  <footer class="shell">静态站只展示项目材料，不包含旧后端、数据库连接、Render/R2 密钥或私有配置。</footer>
 </body>
 </html>
