@@ -54,6 +54,25 @@ Cloudflare Pages 参数：
 - 图片和视频上传通过服务端进入 Cloudflare R2。
 - 支付、短信、IM、推送等第三方能力只保留安全 stub，不在展示环境触发真实外部服务。
 
+### Health 与 smoke 边界
+
+后端健康检查入口是 Spring Boot Actuator health，部署路径保持在
+`/free_kicker/actuator/health`。它只能证明服务进程和基础依赖在该时刻可响应，
+不能等同于完整业务 SLA。
+
+部署后推荐使用后端仓库中的 `scripts/smoke-test.ps1` 做核心链路烟测。Smoke 会覆盖：
+
+- health。
+- 兼容旧 envelope 的登录接口。
+- 动态列表。
+- 短视频列表。
+- 球队主页。
+- 球场列表。
+
+如果 Render 免费实例冷启动或 health 请求超时，应先重试并查看 Render logs，再判断是否是
+数据库、Flyway、R2、环境变量或服务启动问题。展示站是纯静态站，只负责说明和下载入口；
+它不会也不应该保存后端密钥、数据库连接或 Render/R2 私有配置。
+
 ## 后端边界
 
 旧版寻球后端是 Java Maven WAR，需要：
