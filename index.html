@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>寻球移动端与现代后端重建项目</title>
+  <title>寻球移动端与现代后端重建项目 | BIAU Port 泊岸</title>
   <meta name="description" content="寻球项目展示站：遗留 App 梳理、Android 64 位客户端重建、Spring Boot 3 新后端、Render PostgreSQL、Cloudflare R2 上传链路和验证矩阵。">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <style>
     :root {
       color-scheme: light;
@@ -70,6 +71,23 @@
       font-weight: 900;
       letter-spacing: 0;
       white-space: nowrap;
+    }
+
+    .brand-text {
+      display: grid;
+      gap: 2px;
+      line-height: 1.15;
+    }
+
+    .brand-text strong,
+    .brand-text small {
+      display: block;
+    }
+
+    .brand-text small {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
     }
 
     .brand-mark {
@@ -587,7 +605,10 @@
   <header class="shell nav">
     <a class="brand" href="#">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span>寻球产品展示</span>
+      <span class="brand-text">
+        <strong>寻球产品展示</strong>
+        <small>BIAU Port / 泊岸</small>
+      </span>
     </a>
     <nav class="nav-links" aria-label="页面导航">
       <a href="#legacy">旧版梳理</a>
@@ -845,7 +866,7 @@
   </main>
 
   <footer class="shell">
-    <div>寻球项目静态展示站。页面只包含项目说明、技术文档、仓库入口和 APK 下载，不包含密钥、数据库连接或私有云配置。</div>
+    <div>寻球项目静态展示站，归属于 BIAU Port / 泊岸项目展示体系。页面只包含项目说明、技术文档、仓库入口和 APK 下载，不包含密钥、数据库连接或私有云配置。</div>
   </footer>
 </body>
 </html>
