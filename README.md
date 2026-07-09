@@ -160,4 +160,4 @@ When replacing the APK, record the source build, feature scope, timestamp, SHA-2
 
 ## License
 
-No standalone license file is included yet. Add a clear open-source license before advertising this repository for unrestricted reuse.
+This repository is licensed under the [Apache License 2.0](LICENSE).
