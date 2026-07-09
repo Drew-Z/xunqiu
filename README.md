@@ -2,6 +2,8 @@
 
 一个面向访客和开发者的纯静态展示站，用来说明寻球移动端重建、现代后端迁移、短视频上传链路和阶段 APK 演示边界。
 
+简体中文文档：[README.zh-CN.md](README.zh-CN.md)
+
 ![Static Site](https://img.shields.io/badge/site-static%20html-2d5f81)
 ![Cloudflare Pages](https://img.shields.io/badge/deploy-Cloudflare%20Pages-f38020)
 ![BIAU Port](https://img.shields.io/badge/ecosystem-BIAU%20Port-4f8a46)
