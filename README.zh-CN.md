@@ -2,15 +2,15 @@
 
 中文文档 | [English README](README.md)
 
-这是一个面向访客和开发者的纯静态展示站，用来说明寻球移动端重建、现代后端迁移、短视频上传链路和阶段 APK 演示边界。
+这是一个面向访客和开发者的纯静态展示站，用来说明寻球移动端重建、现代后端迁移、短视频上传链路和 APK 正式发布门禁。
 
 ## 功能
 
 - 纯静态 HTML/CSS 展示页，无构建步骤。
 - 首页展示寻球移动端重建、技术路线和演示入口。
 - 技术文档页整理旧 Android 分析、64 位重建、视频链路和部署验证。
-- `_headers` 配置 APK content type 与静态资源缓存。
-- `downloads/latest-xunqiu64.apk` 仅作为阶段演示包，不是官方发布包。
+- `_headers` 配置公开安全的静态资源缓存。
+- 页面展示 APK 发布状态，但正式批准前不托管阶段包或下载链接。
 
 ## 架构
 
@@ -18,21 +18,19 @@
 flowchart LR
   visitor["访客"]
   pages["Cloudflare Pages\n静态 HTML / docs / assets"]
-  apk["阶段 APK"]
   android["寻球 Android 64 位客户端"]
   backend["xunqiu-backend-modern\nSpring Boot API"]
   db["PostgreSQL + Flyway"]
   r2["Cloudflare R2\n可选媒体存储"]
 
   visitor --> pages
-  pages --> apk
-  apk --> android
+  pages -. "发布状态" .-> android
   android --> backend
   backend --> db
   backend --> r2
 ```
 
-该仓库只负责静态展示站和阶段 APK 静态托管边界。Android 项目和后端项目单独维护。
+该仓库只负责公开静态展示站。Android 构建产物和后端项目单独维护。
 
 ## 快速开始
 
@@ -64,21 +62,21 @@ http://localhost:4173/
 
 不要把后端密钥、Render 环境变量、R2 凭据、签名文件或数据库连接串放进这个静态仓库。
 
-## APK 边界
+## APK 发布边界
 
-`downloads/latest-xunqiu64.apk` 是阶段/demo artifact：
+阶段 APK 只保留在维护者本地归档中。公开下载必须先具备：
 
-- 可用于受控演示和手动安装测试；
-- 不是正式签名发布包；
-- 不是应用商店分发包；
-- 后续公开发布需要签名策略、SHA-256、变更记录和人工批准。
+- 正式 release 签名策略；
+- SHA-256、版本说明和变更记录；
+- 扫描与回归证据；
+- 回滚说明和维护者批准。
 
 ## 检查
 
 ```bash
 test -f index.html
 test -f docs.html
-test -f downloads/latest-xunqiu64.apk
+test ! -e downloads/latest-xunqiu64.apk
 rg -n "sk-|DATABASE_URL|R2_SECRET|PRIVATE KEY|BEGIN RSA|BEGIN OPENSSH" .
 git diff --check
 ```
@@ -86,7 +84,7 @@ git diff --check
 ## 安全边界
 
 - 不提交生产凭据、私有后端 URL、模型 key、数据库 URL、R2 key、签名材料或本机路径。
-- 阶段 APK 不能被包装成官方发布包。
+- 正式批准前不要提交 APK/AAB 文件或公开下载链接。
 - 动态 API 行为属于后端服务，不属于静态站仓库。
 
 ## 许可证

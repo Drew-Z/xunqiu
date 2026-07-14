@@ -25,7 +25,7 @@
 xunqiu64-stageN-feature-name-YYYYMMDD-HHMM.apk
 ```
 
-每个阶段包保留历史记录和 SHA-256，避免覆盖旧包。展示站中的 `downloads/latest-xunqiu64.apk` 是当前用于展示的最新阶段包副本。
+每个阶段包保留在本地归档并记录 SHA-256，避免覆盖旧包。展示站不包含阶段 APK 副本；只有正式 release 签名、版本说明、扫描与回归证据、回滚说明和维护者批准完成后，才会重新评估公开下载。
 
 ## Cloudflare Pages 部署
 
@@ -42,7 +42,6 @@ Cloudflare Pages 参数：
 - `docs.html`
 - `docs/technical/`
 - `assets/`
-- `downloads/latest-xunqiu64.apk`
 
 ## 新后端验证
 
@@ -70,7 +69,7 @@ Cloudflare Pages 参数：
 - 球场列表。
 
 如果 Render 免费实例冷启动或 health 请求超时，应先重试并查看 Render logs，再判断是否是
-数据库、Flyway、R2、环境变量或服务启动问题。展示站是纯静态站，只负责说明和下载入口；
+数据库、Flyway、R2、环境变量或服务启动问题。展示站是纯静态站，只负责项目说明和发布状态；
 它不会也不应该保存后端密钥、数据库连接或 Render/R2 私有配置。
 
 ## 后端边界
@@ -84,4 +83,4 @@ Cloudflare Pages 参数：
 - 配置文件。
 - 媒体上传目录。
 
-Cloudflare Pages 不能运行这类后端服务。本展示站仅用于技术材料和 APK 静态托管；新版动态能力由独立后端服务提供，不在静态站中保存任何密钥或私有配置。
+Cloudflare Pages 不能运行这类后端服务。本展示站仅用于技术材料和发布状态说明；新版动态能力由独立后端服务提供，不在静态站中保存任何密钥、私有配置或未批准 APK。

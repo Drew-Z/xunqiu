@@ -1,6 +1,6 @@
 # Xunqiu Showcase Site | 寻球技术展示站
 
-一个面向访客和开发者的纯静态展示站，用来说明寻球移动端重建、现代后端迁移、短视频上传链路和阶段 APK 演示边界。
+一个面向访客和开发者的纯静态展示站，用来说明寻球移动端重建、现代后端迁移、短视频上传链路和 APK 正式发布门禁。
 
 简体中文文档：[README.zh-CN.md](README.zh-CN.md)
 
@@ -29,7 +29,7 @@ Public-safe assets included in this repository:
 
 - `assets/football-hero.jpg` for the first viewport.
 - `assets/video-cover-street.jpg` and `assets/video-cover-passing.jpg` for the video pipeline section.
-- `downloads/latest-xunqiu64.apk` as a stage/demo Android artifact, not an official app-store release.
+- APK artifacts remain in the maintainer's local release archive and are not included in this public repository before formal release approval.
 
 Open `index.html` to view the product case page, and open `docs.html` for technical documentation entry points.
 
@@ -41,15 +41,15 @@ Xunqiu started as a legacy football community app with old Android tooling, 32-b
 - why the 64-bit Android client was rebuilt as a lighter path;
 - how the Spring Boot backend restores the core API envelope;
 - how images and short videos move through upload, storage, list return, and playback;
-- where the stage APK and backend verification boundaries are.
+- where the APK release gate and backend verification boundaries are.
 
 ## Features
 
 - Static product page with BIAU Port / 泊岸 branding.
 - Technical docs for legacy Android analysis, Android 64-bit rebuild, video pipeline, and deployment validation.
 - Public-safe visual assets and no runtime build step.
-- Cloudflare Pages `_headers` for APK content type and long-lived static asset caching.
-- Stage APK download entry with explicit non-official-release positioning.
+- Cloudflare Pages `_headers` for public-safe static asset caching.
+- A visible APK release status that does not expose unapproved stage artifacts.
 
 ## Architecture
 
@@ -57,21 +57,19 @@ Xunqiu started as a legacy football community app with old Android tooling, 32-b
 flowchart LR
   visitor["Visitor"]
   pages["Cloudflare Pages\nstatic HTML/docs/assets"]
-  apk["Stage APK artifact"]
   android["Xunqiu Android 64-bit client"]
   backend["xunqiu-backend-modern\nSpring Boot 3 API"]
   db["PostgreSQL + Flyway seed"]
   r2["Cloudflare R2 optional media storage"]
 
   visitor --> pages
-  pages --> apk
-  apk --> android
+  pages -. "release status" .-> android
   android --> backend
   backend --> db
   backend --> r2
 ```
 
-This repository owns only the `pages` and `apk` static hosting boundary. The Android project and backend are maintained separately.
+This repository owns only the public `pages` boundary. Android artifacts and the backend are maintained separately.
 
 ## Quick Start
 
@@ -116,8 +114,6 @@ The site is intentionally static. Do not add backend secrets, Render variables, 
 ├── assets/
 ├── docs/
 │   └── technical/
-└── downloads/
-    └── latest-xunqiu64.apk
 ```
 
 ## Testing
@@ -127,28 +123,28 @@ Recommended local checks before publishing:
 ```powershell
 Test-Path .\index.html
 Test-Path .\docs.html
-Test-Path .\downloads\latest-xunqiu64.apk
+if (Test-Path .\downloads\*.apk) { throw 'Unapproved APK found in public showcase repository.' }
 rg -n "sk-|DATABASE_URL|R2_SECRET|PRIVATE KEY|BEGIN RSA|BEGIN OPENSSH" .
 git diff --check
 ```
 
-For link and asset review, open `index.html` and `docs.html` in a browser and check the buttons for `docs/technical/*` and `downloads/latest-xunqiu64.apk`.
+For link and asset review, open `index.html` and `docs.html` in a browser and confirm the release-status section contains no direct APK link.
 
 ## Release And APK Boundary
 
-`downloads/latest-xunqiu64.apk` is a stage/demo artifact used to show the current Android rebuild progress. Treat it as:
+Stage APK artifacts are kept outside this public repository. Public download remains disabled until the candidate has:
 
-- suitable for controlled demonstration and manual installation testing;
-- not a signed official public release;
-- not a Play Store / app-store distribution package;
-- gated by future release signing, SHA-256 publication, changelog, and owner approval.
+- an approved release signing process;
+- a published SHA-256 and version/changelog;
+- scan and regression evidence;
+- rollback notes and maintainer approval.
 
-When replacing the APK, record the source build, feature scope, timestamp, SHA-256, and validation result in the companion Android project before publishing the static copy.
+Before publishing a future APK, record the source build, feature scope, timestamp, SHA-256, and validation result in the companion Android project, then update the showcase through a reviewed release change.
 
 ## Security
 
 - This repository must not contain production credentials, private backend URLs, model keys, database URLs, R2 keys, signing material, or local machine paths.
-- The stage APK should not be presented as an official release until signing and release approval are complete.
+- Do not add APK/AAB files or public download links until signing and release approval are complete.
 - Cloudflare Pages only serves static files. Dynamic API behavior belongs to the backend service.
 
 ## Roadmap

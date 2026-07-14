@@ -6,6 +6,7 @@ node_modules/
 dist/
 build/
 *.log
+downloads/*.apk
 
 # Local AI/session artifacts
 .agent-work/

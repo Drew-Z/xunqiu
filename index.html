@@ -616,7 +616,7 @@
       <a href="#backend">后端重建</a>
       <a href="#video">上传链路</a>
       <a href="#docs">技术文档</a>
-      <a href="#download">APK</a>
+      <a href="#release">发布状态</a>
     </nav>
   </header>
 
@@ -632,7 +632,7 @@
           <a class="btn btn-primary" href="#rebuild">查看系统链路</a>
           <a class="btn btn-ghost" href="docs.html">查看技术文档</a>
           <a class="btn btn-ghost" href="docs/technical/validation-and-deploy.md">后端验证文档</a>
-          <a class="btn btn-ghost" href="downloads/latest-xunqiu64.apk">下载 APK</a>
+          <a class="btn btn-ghost" href="#release">查看发布状态</a>
         </div>
       </div>
 
@@ -836,7 +836,7 @@
         </a>
         <a class="doc-card" href="docs/technical/validation-and-deploy.md">
           <h3>验证与部署</h3>
-          <p>客户端验收、后端健康检查、R2 上传验证、APK 下载和 Cloudflare Pages 参数。</p>
+          <p>客户端验收、后端健康检查、R2 上传验证、APK 发布门禁和 Cloudflare Pages 参数。</p>
         </a>
       </div>
       <div class="cta-row">
@@ -844,19 +844,19 @@
       </div>
     </section>
 
-    <section class="shell section" id="download">
+    <section class="shell section" id="release">
       <div class="download">
         <div>
-          <h2>可下载的 64 位阶段包</h2>
-          <p class="lead">这个 APK 用于展示客户端阶段成果。静态站不运行后端服务；新版客户端对应的新后端已独立部署，旧版客户端仍保留旧后端链路。</p>
+          <h2>APK 下载尚未开放</h2>
+          <p class="lead">64 位客户端阶段包保留在本地归档中。正式 release 签名、SHA-256、扫描与回归证据、版本说明、回滚说明和维护者批准完成前，展示站不托管 APK 文件。</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="downloads/latest-xunqiu64.apk">下载 latest-xunqiu64.apk</a>
+            <span class="btn btn-primary" aria-disabled="true">APK 待正式发布</span>
             <a class="btn btn-ghost" href="docs.html">看部署说明</a>
             <a class="btn btn-ghost" href="docs/technical/validation-and-deploy.md">后端验证文档</a>
           </div>
         </div>
         <div class="facts">
-          <div class="fact"><span>包名</span><strong>com.playlab.xunqiu64</strong></div>
+          <div class="fact"><span>下载状态</span><strong>等待正式 release 审核</strong></div>
           <div class="fact"><span>构建方向</span><strong>Android 64 位兼容客户端</strong></div>
           <div class="fact"><span>新后端</span><strong>Spring Boot 3 / PostgreSQL / R2</strong></div>
           <div class="fact"><span>部署方式</span><strong>产品页 Cloudflare Pages，后端 Render</strong></div>
@@ -866,7 +866,7 @@
   </main>
 
   <footer class="shell">
-    <div>寻球项目静态展示站，归属于 BIAU Port / 泊岸项目展示体系。页面只包含项目说明、技术文档、仓库入口和 APK 下载，不包含密钥、数据库连接或私有云配置。</div>
+    <div>寻球项目静态展示站，归属于 BIAU Port / 泊岸项目展示体系。页面只包含项目说明、技术文档、仓库入口和发布状态，不包含密钥、数据库连接或私有云配置。</div>
   </footer>
 </body>
 </html>
